@@ -7,10 +7,17 @@ any git hosting provider (github/gitlab/bitbucket etc).
 
 # Installation
 
-1. Download git.sh
-2. `alias git=<path-to-git.sh>`
+```
+curl -L https://raw.githubusercontent.com/chrisjsimpson/git-issues-command-line/main/git.sh > $HOME/.local/bin/giti
+```
+
+```
+alias git=$HOME/.local/bin/giti
+```
 
 # Usage
 
-`git list issues`
+```
+git list issues
+```
 
