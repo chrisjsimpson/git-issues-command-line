@@ -13,6 +13,7 @@ curl -L https://raw.githubusercontent.com/chrisjsimpson/git-issues-command-line/
 
 ```
 alias git=$HOME/.local/bin/giti
+chmod +x $HOME/.local/bin/giti
 ```
 
 # Usage
