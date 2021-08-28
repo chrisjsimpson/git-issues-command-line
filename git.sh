@@ -31,7 +31,7 @@ function listIssues {
   curl --silent -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues | jq -r '.[] | (.number|tostring) + ":" + .title'
 }
 
-function getlistcommand {
+function getListCommand {
   # Work out what they want to list
   #(issues/pull requests? etc)
   echo You want to list $2 from $GITHOST
@@ -40,7 +40,7 @@ function getlistcommand {
   fi
 }
 
-function getcommand {
+function getCommand {
   # Work out what git command they want to run
   # If it's an error from git don't try ang continue
   # otherwise, check if it's a command we've added
@@ -54,7 +54,7 @@ function getcommand {
   
   if [ "$1" = "list" ]; then
     echo You want to list something
-    getlistcommand $@
+    getListCommand $@
   fi
 }
 
@@ -63,7 +63,7 @@ function mygit {
   echo $0
   echo ${FUNCNAME}
   workoutGitHost # First work out which git host
-  git $@ || getcommand $@
+  git $@ || getCommand $@
 }
 
 mygit $@
