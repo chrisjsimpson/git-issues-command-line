@@ -28,7 +28,9 @@ function GitHubWorkoutRepoName {
 
 function listIssues {
   echo Listing issues from $GITHOST
-  curl --silent -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues | jq -r '.[] | (.number|tostring) + ":" + .title'
+  if [ "$GITHOST" = "github" ]; then
+    curl --silent -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues | jq -r '.[] | (.number|tostring) + ":" + .title'
+  fi
 }
 
 function getListCommand {
