@@ -42,6 +42,22 @@ function getListCommand {
   fi
 }
 
+function readIssue {
+  echo Getting issue $3
+  if [ "$GITHOST" = "github" ]; then
+    curl --silent -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues/$3 | jq -r '.body'
+  fi
+}
+
+function getReadCommand {
+  # Work out what they want to read
+  #(issues/pull requests? etc)
+  echo You want to read $2 from $GITHOST
+  if [ "$2" = "issue" ]; then
+    readIssue $@
+  fi
+}
+
 function getCommand {
   # Work out what git command they want to run
   # If it's an error from git don't try ang continue
@@ -57,6 +73,11 @@ function getCommand {
   if [ "$1" = "list" ]; then
     echo You want to list something
     getListCommand $@
+  fi
+
+  if [ "$1" = "read" ]; then
+    echo You want to read something
+    getReadCommand $@
   fi
 }
 
