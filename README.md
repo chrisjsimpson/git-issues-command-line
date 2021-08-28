@@ -22,3 +22,8 @@ chmod +x $HOME/.local/bin/giti
 git list issues
 ```
 
+# Uninstall
+```
+rm $HOME/.local/bin/giti
+unalias git
+```
