@@ -27,3 +27,15 @@ git list issues
 rm $HOME/.local/bin/giti
 unalias git
 ```
+
+## Authentication
+
+If working with a private repo:
+
+### GitHub
+
+```
+export GITHUB_USERNAME=<yourusername>
+```
+
+export GITHUB_ACCESS_TOKEN=<[access token]("https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token")>
