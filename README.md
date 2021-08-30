@@ -20,6 +20,8 @@ chmod +x $HOME/.local/bin/giti
 
 ```
 git list issues
+git read issue <issue-number>
+git close issue <issue-number>
 ```
 
 # Uninstall
