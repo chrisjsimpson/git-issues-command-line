@@ -29,7 +29,8 @@ function GitHubWorkoutRepoName {
 function listIssues {
   echo Listing issues from $GITHOST
   if [ "$GITHOST" = "github" ]; then
-    curl --silent -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues | jq -r '.[] | (.number|tostring) + ":" + .title'
+    curl -s -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues | jq -r '.[] | (.number|tostring) + ":" + .title'
+
   fi
 }
 
@@ -58,6 +59,32 @@ function getReadCommand {
   fi
 }
 
+function createIssue {
+  echo Creating issue $3
+  echo Enter issue title:
+  read issueTitle
+  echo Enter issue description:
+  read issueDescription
+
+  if [ "$GITHOST" = "github" ]; then
+    curl -X POST --silent \
+      -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN \
+      https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues \
+      -d '{"title":"'"$issueTitle"'"}'| \
+      jq -r '(.number|tostring) + ":" + .title'
+  fi
+
+}
+
+function getCreateCommand {
+  # Work out what they want to create
+  # e.g new issue
+  echo You want to create $2 from $GITHOST
+  if [ "$2" = "issue" ]; then
+    createIssue $@
+  fi
+}
+
 function getCommand {
   # Work out what git command they want to run
   # If it's an error from git don't try ang continue
@@ -78,6 +105,11 @@ function getCommand {
   if [ "$1" = "read" ]; then
     echo You want to read something
     getReadCommand $@
+  fi
+
+  if [ "$1" = "new" ] || [ "$1" = "create" ]; then
+    echo "You want to create something new"
+    getCreateCommand $@
   fi
 }
 
