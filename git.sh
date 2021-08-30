@@ -85,6 +85,26 @@ function getCreateCommand {
   fi
 }
 
+function closeIssue {
+  if [ "$GITHOST" = "github" ]; then
+    curl -X PATCH --silent \
+      -u $GITHUB_USERNAME:$GITHUB_ACCESS_TOKEN \
+      https://api.github.com/repos/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME/issues/$3 \
+      -d '{"state":"closed"}'
+  fi
+
+}
+
+function getCloseCommand {
+  # Work out what they want to close
+  # e.g close issue
+  echo You want to close $2 from $GITHOST
+  if [ "$2" = "issue" ]; then
+    closeIssue $@
+  fi
+}
+
+
 function getCommand {
   # Work out what git command they want to run
   # If it's an error from git don't try ang continue
@@ -110,6 +130,11 @@ function getCommand {
   if [ "$1" = "new" ] || [ "$1" = "create" ]; then
     echo "You want to create something new"
     getCreateCommand $@
+  fi
+
+  if [ "$1" = "close" ]; then
+    echo "You want to close something"
+    getCloseCommand $@
   fi
 }
 
