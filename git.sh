@@ -105,22 +105,33 @@ function getCommand {
   if [ $exitCode -gt 2 ]; then
     exit $? # Was probably a error from git, dont continue
   fi
-  
-  if [ "$1" = "list" ]; then
-    getListCommand $@
-  fi
 
-  if [ "$1" = "read" ]; then
-    getReadCommand $@
-  fi
 
-  if [ "$1" = "new" ] || [ "$1" = "create" ]; then
-    getCreateCommand $@
-  fi
+	case "$1" in
+					list)
+							getListCommand $@
+							;;
 
-  if [ "$1" = "close" ]; then
-    getCloseCommand $@
-  fi
+					read)
+							getReadCommand $@
+							;;
+
+					new)
+							getCreateCommand $@
+							;;
+
+					create)
+							getCreateCommand $@
+							;;
+
+					close)
+							getCloseCommand $@
+							;;
+					*)
+							echo $"Usage: $0 {list issues|new issue|read issue <issue-number>|close issue <issue-number>}"
+							exit 1
+	esac
+
 }
 
 function mygit {
