@@ -24,6 +24,11 @@ git read issue <issue-number>
 git close issue <issue-number>
 ```
 
+# Turn off
+``
+unalias git
+```
+
 # Uninstall
 ```
 rm $HOME/.local/bin/giti
