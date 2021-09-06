@@ -25,7 +25,7 @@ git close issue <issue-number>
 ```
 
 # Turn off
-``
+```
 unalias git
 ```
 
